@@ -1,0 +1,22 @@
+# JSP를 사용하기 위한 뷰 리졸버(ViewResolver) 설정
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    DriverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/metacoding?serverTimezone=Asia/Seoul
+    username: tori
+    password: tori!1234
+  activemq:
+    close-timeout: true
+
+#JSP수정시 서버 재시작없이 바로 적용될 수 있게 설정
+server:
+  servlet:
+    jsp:
+      init-parameters:
+        development: true
+
+
