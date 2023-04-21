@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HelloController {
 
-    @GetMapping("/")
+    @GetMapping("/hello")
 //    @RequestMapping(value="/index", method= RequestMethod.GET)
-    public String hell() {
+    public String hello() {
         System.out.println("home controller start");
-        return "index";
+        return "index_bef";
     }
 }

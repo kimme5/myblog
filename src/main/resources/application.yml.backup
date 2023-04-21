@@ -1,0 +1,60 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /myblog
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    #JSP수정시 서버 재시작없이 바로 적용될 수 있게 설정
+    jsp:
+      init-parameters:
+        development: true
+
+# JSP를 사용하기 위한 뷰 리졸버(ViewResolver) 설정
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    DriverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/metacoding?serverTimezone=Asia/Seoul
+#    username: root
+#    password: 123456
+    username: tori
+    password: tori!1234
+  activemq:
+    close-timeout: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        # User.userName --> userName 으로 생성
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        # User.userName --> user_name 으로 생성
+        # physical-strategy: org.hibernate.boot.model.naming.SpringPhysicalNamingStrategy
+      # JPA 가 사용하는 기본 Numbering 전략을 따르지 않음
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql: trace
+    com:
+      metacoding: DEBUG
