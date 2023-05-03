@@ -6,7 +6,10 @@ import com.metacoding.myblog.model.User;
 import com.metacoding.myblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +22,28 @@ public class UserApiController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    /**
+     * jsp에서 전달받는 데이터를 json형태로 받으려면 @RequestBody 어노테이션을 매개변수 앞에 선언해야 함
+     * @RequestBody 어노테이션을 주지 않으면 x-www-urlencoded 형태로 받게 됨
+     */
+    // @PutMapping("/user/update/")
+    @RequestMapping(value = "/user/update", method = RequestMethod.PUT)
+    public ResponseDto<Integer> updateUser(@RequestBody User rqstUser) {
+        userService.updateUser(rqstUser);
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        rqstUser.getUsername(), rqstUser.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
 
     @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> saveUser(@RequestBody User user) {

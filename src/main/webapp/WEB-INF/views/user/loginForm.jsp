@@ -12,6 +12,9 @@
                         name="password">
                 </div>
                 <button type="submit" id="btn-login" class="btn btn-primary">로그인</button>
+                <a
+                    href="https://kauth.kakao.com/oauth/authorize?client_id=b5f8de641726a4aa2ab2c95f7bd085c8&redirect_uri=http://localhost:8000/auth/kakao/callback&response_type=code"><img
+                        height="35" width="72" src="/image/kakao_login_button.png" alt=""></a>
             </form>
         </div>
         <%@ include file="../layout/footer.jsp" %>

@@ -1,13 +1,17 @@
 let index = {
   init: function () {
-    // function() {}처럼 사용하지 않고 =>{} 한 이유는 this를 바인딩하기 위해서!!!
     $("#btn-save").on("click", () => {
       this.save();
+    });
+    $("#btn-delete").on("click", () => {
+      this.deleteById();
+    });
+    $("#btn-update").on("click", () => {
+      this.update();
     });
   },
 
   save: function () {
-    // alert("user의 save함수 호출됨");
     let data = {
       title: $("#title").val(),
       content: $("#content").val(),
@@ -22,6 +26,47 @@ let index = {
     })
       .done(function (response) {
         alert("글쓰기가 완료되었습니다.");
+        console.log(response);
+        location.href = "/";
+      })
+      .fail(function (error) {
+        console.log(JSON.stringify(error));
+      });
+  },
+
+  deleteById: function () {
+    let id = $("#id").text();
+    $.ajax({
+      type: "DELETE",
+      url: "/api/board/" + id,
+      dataType: "json",
+    })
+      .done(function (response) {
+        alert("삭제가 완료되었습니다.");
+        console.log(response);
+        location.href = "/";
+      })
+      .fail(function (error) {
+        console.log(JSON.stringify(error));
+      });
+  },
+
+  update: function () {
+    let id = $("#id").val();
+    let data = {
+      title: $("#title").val(),
+      content: $("#content").val(),
+    };
+
+    $.ajax({
+      type: "PUT",
+      url: "/api/board/" + id,
+      data: JSON.stringify(data),
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+    })
+      .done(function (response) {
+        alert("수정이 완료되었습니다.");
         console.log(response);
         location.href = "/";
       })

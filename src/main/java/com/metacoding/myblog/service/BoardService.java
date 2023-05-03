@@ -17,10 +17,37 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Transactional
+    public void updateBoard(int id, Board requestBoard) {
+
+        Board board = boardRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("해당 id의 게시글을 찾을 수 없습니다.");
+        }); // 영속화 완료
+
+        board.setTitle(requestBoard.getTitle());
+        board.setContent(requestBoard.getContent());
+//        board.setCount(board.getCount() + 1);
+        boardRepository.save(board);
+    }
+
+
+    @Transactional
+    public void deleteBoardById(int id) {
+        boardRepository.deleteById(id);
+    }
+    @Transactional(readOnly = true)
+    public Board boardDetail(int id) {
+        return boardRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("해당 id의 사용자가 존재하지 않습니다.");
+        });
+    }
+
+    @Transactional(readOnly = true)
     public Page<Board> boardPage(Pageable pageable) {
         return boardRepository.findAll(pageable);
     }
 
+    @Transactional(readOnly = true)
     public List<Board> boardList() {
         return boardRepository.findAll();
     }

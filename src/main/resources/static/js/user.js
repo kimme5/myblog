@@ -4,6 +4,9 @@ let index = {
     $("#btn-save").on("click", () => {
       this.save();
     });
+    $("#btn-update").on("click", () => {
+      this.updateUser();
+    });
   },
 
   save: function () {
@@ -43,6 +46,31 @@ let index = {
       .fail(function (error) {
         // 요청에 대한 결과가 실패한 경우 실행
         // alert(JSON.stringify(error));
+        console.log(JSON.stringify(error));
+      });
+  },
+
+  updateUser: function () {
+    let data = {
+      id: $("#id").val(),
+      username: $("#username").val(),
+      password: $("#password").val(),
+      email: $("#email").val(),
+    };
+
+    $.ajax({
+      type: "PUT",
+      url: "/user/update/",
+      data: JSON.stringify(data),
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+    })
+      .done(function (response) {
+        alert("회원 정보가 수정되었습니다.");
+        console.log(response);
+        location.href = "/";
+      })
+      .fail(function (error) {
         console.log(JSON.stringify(error));
       });
   },

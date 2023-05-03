@@ -28,7 +28,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 30, unique = true)
+    @Column(nullable = false, length = 100, unique = true)
     private String username;
 
     @Column(nullable = false, length = 100)
@@ -43,6 +43,9 @@ public class User {
     // DB는 RoleType이 없으므로 @Enumerated 어노테이션을 통해 RoleType ENUM 클래스가 String임을 알려줘야 함
     @Enumerated(EnumType.STRING)
     private RoleType role;  // ADMIN, USER
+
+    @Column(nullable = true, length = 20)
+    private String oauth;   // kakao, google 로그인 정보 저장
 
     /**
      * CreationTimestamp 어노테이션으로 시간이 자동으로 입력됨
