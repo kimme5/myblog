@@ -9,6 +9,12 @@ let index = {
     $("#btn-update").on("click", () => {
       this.update();
     });
+    $("#btn-reply-save").on("click", () => {
+      this.replySave();
+    });
+    // $("#btn-reply-delete").on("click", () => {
+    //   this.deleteReply();
+    // });
   },
 
   save: function () {
@@ -69,6 +75,47 @@ let index = {
         alert("수정이 완료되었습니다.");
         console.log(response);
         location.href = "/";
+      })
+      .fail(function (error) {
+        console.log(JSON.stringify(error));
+      });
+  },
+
+  replySave: function () {
+    let data = {
+      userId: $("#userId").val(),
+      boardId: $("#boardId").val(),
+      content: $("#reply-content").val(),
+    };
+    // console.log(data);
+    $.ajax({
+      type: "POST",
+      url: `/api/board/${data.boardId}/nativereply`,
+      data: JSON.stringify(data),
+      contentType: "application/json;charset=utf-8",
+      dataType: "json",
+    })
+      .done(function (response) {
+        alert("댓글 작성이 완료되었습니다.");
+        console.log(response);
+        location.href = `/board/${data.boardId}`;
+      })
+      .fail(function (error) {
+        console.log(JSON.stringify(error));
+      });
+  },
+
+  deleteReply: function (boardId, replyId) {
+    // alert(replyId);
+    $.ajax({
+      type: "DELETE",
+      url: `/api/board/${boardId}/reply/${replyId}`,
+      dataType: "json",
+    })
+      .done(function (response) {
+        alert("댓글 삭제가 완료되었습니다.");
+        console.log(response);
+        location.href = `/board/${boardId}`;
       })
       .fail(function (error) {
         console.log(JSON.stringify(error));

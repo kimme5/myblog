@@ -38,10 +38,14 @@ let index = {
       dataType: "json",
     })
       .done(function (response) {
-        // 요청에 대한 결과가 정상적으로 수행된 경우 실행
-        alert("회원가입이 완료되었습니다.");
-        console.log(response);
-        location.href = "/";
+        if (response.status == 500) {
+          alert("회원 가입에 실패하였습니다.");
+        } else {
+          // 요청에 대한 결과가 정상적으로 수행된 경우 실행
+          alert("회원가입이 완료되었습니다.");
+          console.log(response);
+          location.href = "/";
+        }
       })
       .fail(function (error) {
         // 요청에 대한 결과가 실패한 경우 실행

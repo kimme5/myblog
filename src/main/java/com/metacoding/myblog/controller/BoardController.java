@@ -31,7 +31,7 @@ public class BoardController {
 
     @GetMapping({"", "/"})
     public String indexPage(Model model
-                          , @PageableDefault(size = 3
+                          , @PageableDefault(size = 5
                                            , sort = "id"
                                            , direction = Sort.Direction.DESC) Pageable pageable) {
 //    public String index(@AuthenticationPrincipal PrincipalDetail principalDetail) {

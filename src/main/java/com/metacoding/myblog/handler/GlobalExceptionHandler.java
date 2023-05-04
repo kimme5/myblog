@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @ControllerAdvice
 @RestController
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(value = IllegalArgumentException.class)
     public String handleArgumentsExceptionBefore1(IllegalArgumentException e) {
         return "<h1>" + e.getMessage() + "</h1>";
@@ -19,5 +18,4 @@ public class GlobalExceptionHandler {
         return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 //        return "<h1>" + e.getMessage() + "</h1>";
     }
-
 }

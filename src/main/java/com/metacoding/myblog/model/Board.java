@@ -1,5 +1,6 @@
 package com.metacoding.myblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,8 +58,10 @@ public class Board {
      * 여기서 FetchType을 EAGER로 가져온 것은 게시글이 조회됨과 동시에 해당 게시글에 포함된 모든 댓글 정보도
      * 가져와야 하기 때문임
      */
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-    private List<Reply> reply;
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
+    private List<Reply> replys;
 
     @CreationTimestamp
     private Timestamp createDate;
